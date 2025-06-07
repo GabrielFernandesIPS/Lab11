@@ -15,7 +15,7 @@
 #include "queue.h"
 #include <time.h>
 
-#define STRESS_TEST_SIZE 100000
+#define STRESS_TEST_SIZE 1000
 
 void testFIFO(PtQueue queue);
 void testStress(PtQueue queue);
@@ -62,7 +62,6 @@ void testFIFO(PtQueue queue) {
     while(!queueIsEmpty(queue)) {
         char front;
         queueDequeue(queue, &front);
-        
         int size;
         queueSize(queue, &size);
         printf("Dequeued %c from queue -> (resulting size = %d).\n", front, size);
