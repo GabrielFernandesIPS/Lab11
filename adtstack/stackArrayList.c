@@ -71,6 +71,12 @@ int stackPush(PtStack stack, StackElem elem) {
     if(!ensureCapacity(stack)) return STACK_NO_MEMORY;    
 
     // TODO
+    for(int i = stack->size; i > 0; i--) {
+        stack->elements[i] = stack->elements[i - 1];
+    }
+
+    stack->elements[0] = elem; // Push to the top of the stack
+    stack->size++;
 
     return STACK_OK;
 }
@@ -81,6 +87,11 @@ int stackPop(PtStack stack, StackElem *ptElem) {
     if (stack->size == 0) return STACK_EMPTY;
 
     // TODO
+    *ptElem = stack->elements[0]; // Get the top element
+    for(int i = 0; i < stack->size - 1; i++) {
+        stack->elements[i] = stack->elements[i + 1]; // Shift elements down
+    }
+    stack->size--; // Decrease the size of the stack
 
     return STACK_OK;
 }
@@ -91,7 +102,8 @@ int stackPeek(PtStack stack, StackElem *ptElem) {
     if (stack->size == 0) return STACK_EMPTY;
 
     // TODO
-
+    *ptElem = stack->elements[0]; // Get the top element without removing it
+    
     return STACK_OK;
 }
 
@@ -128,6 +140,10 @@ void stackPrint(PtStack stack) {
         printf("Stack contents (top to bottom): \n");
     
         // TODO - use `stackElemPrint`
+        for(int i = stack->size - 1; i >= 0; i--) {
+            printf("%d: ", i);
+            stackElemPrint(stack->elements[i]);
+        }
         
         printf("--- bottom --- \n");
     }
